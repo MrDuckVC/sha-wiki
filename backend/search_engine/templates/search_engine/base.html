@@ -1,0 +1,42 @@
+{% load bootstrap5 %}
+
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}sha.wiki{% endblock %}</title>
+        {% block css %}
+            {% bootstrap_css %}
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+        {% endblock %}
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg border-body navbar-light bg-light mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{% url 'home' %}">sha.wiki</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'favorite_corporations' %}active{% endif %}" href="{% url 'favorite_corporations' %}">Favorites</a>
+                        <a class="nav-link disabled" href="#">New</a>
+                        <a class="nav-link disabled" href="#">Old</a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'prefecture_search' %}active{% endif %}" href="{% url 'prefecture_search' %}">Prefecture</a>
+                        <a class="nav-link disabled" href="#">Popular</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div class="container mb-5">
+            {% block content %}
+            {% endblock %}
+        </div>
+
+        {% block javascript %}
+            {% bootstrap_javascript %}
+            <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+        {% endblock %}
+    </body>
+</html>

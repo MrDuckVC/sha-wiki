@@ -1,0 +1,38 @@
+{% extends "search_engine/base.html" %}
+
+{% load bootstrap5 %}
+{% load static %}
+{% load corporation_tags %}
+
+{% block content %}
+    {% block filter_forms %}
+        {% if search_form %}
+            <form action="" method="get">
+                {% bootstrap_form search_form %}
+                {% buttons %}
+                    <button type="submit" class="btn btn-primary">Search</button>
+                {% endbuttons %}
+            </form>
+        {% endif %}
+    {% endblock %}
+
+    {% if page_obj.paginator.count == 0 %}
+        <p>No results found.</p>
+    {% else %}
+        <div class="row row-cols-1 row-cols-md-1 g-4 mb-3">
+            {% for corp in page_obj.object_list %}
+                <div class="col">
+                    {% corporation_card corp %}
+                </div>
+            {% endfor %}
+        </div>
+        {% if page_obj.paginator.num_pages > 1 %}
+            {% bootstrap_pagination page_obj justify_content="center" url=request.get_full_path %}
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block javascript %}
+    {{ block.super }}
+    <script src="{% static 'search_engine/js/favorite_button.js' %}"></script>
+{% endblock %}

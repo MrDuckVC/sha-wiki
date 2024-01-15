@@ -1,0 +1,13 @@
+# IDE and text editor files.
+.idea/
+.vscode/
+
+# Virtual Environment.
+venv/
+
+# Django generated files.
+backend/static/
+backend/media/
+
+# Python cache files.
+__pycache__/

@@ -1,0 +1,6 @@
+<label class="btn p-2 m-1 checkbox-option-label {% if widget.selected %}btn-outline-secondary rounded-pill{% else %}btn-secondary{% endif %}" {% if widget.attrs.id %} for="{{ widget.attrs.id }}" {% endif %}>
+    {% include "django/forms/widgets/input.html" %}
+    {% if widget.wrap_label %}
+        {{ widget.label }}
+</label>
+    {% endif %}

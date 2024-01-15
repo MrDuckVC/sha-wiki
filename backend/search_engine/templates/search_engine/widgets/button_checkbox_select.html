@@ -1,0 +1,21 @@
+{% with id=widget.attrs.id %}
+    <div {% if id %} id="{{ id }}" {% endif %} class="d-inline-flex flex-wrap justify-content-start options" data-widget-id="{{ id }}">
+        {% for group, options, index in widget.optgroups %}
+            {% for option in options %}
+                {% if not option.selected %}
+                    {% include option.template_name with widget=option %}
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    </div>
+    <div class="d-inline-flex flex-wrap align-items-center container-fluid border border-info bg-info bg-opacity-10 rounded chosen-options" data-widget-id="{{ id }}">
+        <span class="text-muted">Chosen options:</span>
+        {% for group, options, index in widget.optgroups %}
+            {% for option in options %}
+                {% if option.selected %}
+                    {% include option.template_name with widget=option %}
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    </div>
+{% endwith %}
