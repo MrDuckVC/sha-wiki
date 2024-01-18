@@ -11,3 +11,19 @@ backend/media/
 
 # Python cache files.
 __pycache__/
+
+# Docker
+docker-compose.override.yml
+
+# Environment variables
+database.env
+web.env
+
+# DB data
+docker/db/data/*
+
+# Static files
+backend/static/*
+
+# Media files
+backend/media/*

@@ -1,0 +1,32 @@
+services:
+  nginx:
+    restart: unless-stopped
+    image: nginx:alpine
+    volumes:
+      - ./docker/nginx/conf.dev.d:/etc/nginx/conf.d:ro
+    ports:
+      - 8000:80
+
+  db:
+    image: mariadb
+    volumes:
+      - ./docker/db/data:/var/lib/mysql
+      - ./docker/db/db-init:/docker-entrypoint-initdb.d
+    env_file:
+      - ./database.env
+
+  web:
+    build:
+      target: runtime_dev
+    ports:
+      - 5678:5678
+    depends_on:
+      - db
+
+  start_dependencies:
+    build: ./docker/start_dependencies
+    depends_on:
+      - web
+    command: db:3306 web:5678
+    volumes:
+      - python_sock:/var/run/python
