@@ -4,6 +4,7 @@ from search_engine.models import Prefectures
 
 
 class SearchForm(forms.Form):
+    # TODO: Search as user types and remove submit button.
     search_field = forms.CharField(max_length=256, required=False, label="", help_text="Search by number, name or address.")
 
 

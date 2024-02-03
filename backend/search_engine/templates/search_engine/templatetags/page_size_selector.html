@@ -1,0 +1,9 @@
+{% load bootstrap5 %}
+<label for="amount_of_corporations_page_size" class="col-sm-1 col-form-label">Per page:</label>
+<div class="col-sm-1">
+    <select class="form-select" aria-label="Amount of corporations per page" onchange="location = this.value;" id="amount_of_corporations_page_size">
+        {% for page_size in page_sizes %}
+            <option value="{% bootstrap_url_replace_param url parameter_name page_size %}" {% if selected_size == page_size %}selected{% endif %}>{{ page_size }}</option>
+        {% endfor %}
+    </select>
+</div>

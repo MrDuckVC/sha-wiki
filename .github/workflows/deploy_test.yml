@@ -1,0 +1,35 @@
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Prepare environment
+      run: |
+        rsync -aH --exclude=docker/db/data --exclude=backend/static --exclude=backend/media --exclude=__pycache__ ./ /var/www/html/${{ vars.DOCKER_PROJECT_NAME }}
+    - name: Login to DockerHub using token
+      run: |
+        cd /var/www/html/${{ vars.DOCKER_PROJECT_NAME }}
+        docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build and push
+      run: |
+        cd /var/www/html/${{ vars.DOCKER_PROJECT_NAME }}
+        docker compose -p ${{ vars.DOCKER_PROJECT_NAME }} -f docker-compose.yml -f docker-compose.override-ci.yml build
+        docker compose -p ${{ vars.DOCKER_PROJECT_NAME }} -f docker-compose.yml -f docker-compose.override-ci.yml push
+    - name: Deploy
+      run: |
+        cd /var/www/html/${{ vars.DOCKER_PROJECT_NAME }}
+        docker compose -p ${{ vars.DOCKER_PROJECT_NAME }} -f docker-compose.yml -f docker-compose.override-ci.yml down --remove-orphans
+        docker compose -p ${{ vars.DOCKER_PROJECT_NAME }} -f docker-compose.yml -f docker-compose.override-ci.yml up -d
+        docker compose -p ${{ vars.DOCKER_PROJECT_NAME }} -f docker-compose.yml -f docker-compose.override-ci.yml run --rm start_dependencies
+        docker compose -p ${{ vars.DOCKER_PROJECT_NAME }} -f docker-compose.yml -f docker-compose.override-ci.yml run --rm web python3 manage.py migrate
+        docker compose -p ${{ vars.DOCKER_PROJECT_NAME }} -f docker-compose.yml -f docker-compose.override-ci.yml run --rm web python3 manage.py collectstatic --no-input --ignore=*.scss
+        docker compose -p ${{ vars.DOCKER_PROJECT_NAME }} -f docker-compose.yml -f docker-compose.override-ci.yml restart web
+    - name: Cleanup
+      run: |
+          docker system prune -f

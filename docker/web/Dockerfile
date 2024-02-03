@@ -21,7 +21,7 @@ RUN pip3 install --no-cache-dir --no-warn-script-location \
 FROM python:3.11-slim as runtime_base
 
 ENV SOCK_PATH=/var/run/python/uwsgi.sock \
-    WSGI_FILE_PATH=/var/www/backend/carpedia/wsgi.py \
+    WSGI_FILE_PATH=/var/www/backend/main/wsgi.py \
     WSGI_PROCESSES=4
 
 VOLUME [ "/var/run/python" ]

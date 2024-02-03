@@ -1,13 +1,45 @@
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
+from django.utils import timezone
 from django.views import View
 
 from .forms import SearchForm, PrefectureForm
-from .models import Corporations
+from .models import Corporations, DynamicHTMLCode
 
 
-class HomeView(View):
+# Mixin for getting dynamic html code from database.
+class DynamicHtmlMixin:
+    """
+    Mixin for getting dynamic html code from database.
+    It will be transferred to the template as a context variable.
+    """
+
+    # Types of html code that can be transferred to the template.
+    dynamic_html_types: list[DynamicHTMLCode.HTMLCodeType] = []
+
+    def get_context_data(self, **kwargs):
+        context = kwargs
+        context["dynamic_html"] = {}
+        for html_type in self.dynamic_html_types:
+            html_codes = DynamicHTMLCode.objects.filter(
+                Q(type=html_type) &
+                Q(enabled=True) & (
+                    Q(expires_at__isnull=True) |
+                    Q(expires_at__gte=timezone.now())
+                )
+            ).all()
+            if html_codes:
+                context["dynamic_html"][html_type] = html_codes
+        return context
+
+
+class HomeView(View, DynamicHtmlMixin):
+    dynamic_html_types = [
+        DynamicHTMLCode.HTMLCodeType.UPPER_RUNNING_TITLE_FOR_HOME_PAGE,
+        DynamicHTMLCode.HTMLCodeType.LOWER_RUNNING_TITLE_FOR_HOME_PAGE,
+    ]
+
     def get(self, request):
         search_form = SearchForm(data=request.GET)
 
@@ -25,16 +57,16 @@ class HomeView(View):
                 )
 
         page = request.GET.get("page", 1)
-        paginator = Paginator(corporations, 20)
+        paginator = Paginator(corporations, request.GET.get("page_size", 10))
         page_obj = paginator.get_page(page)
 
         return render(
             request,
             template_name="search_engine/corporations_list.html",
-            context={
-                "search_form": search_form,
-                "page_obj": page_obj,
-            },
+            context=self.get_context_data(
+                search_form=search_form,
+                page_obj=page_obj,
+            ),
         )
 
 
@@ -70,6 +102,7 @@ class FavoriteCorporationView(View):
         )
 
 
+# Is not used yet, maybe in the future.
 class PrefectureSearchView(View):
     def get(self, request):
         search_form = PrefectureForm(data=request.GET)

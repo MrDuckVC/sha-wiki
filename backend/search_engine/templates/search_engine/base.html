@@ -21,10 +21,7 @@
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav">
                         <a class="nav-link {% if request.resolver_match.url_name == 'favorite_corporations' %}active{% endif %}" href="{% url 'favorite_corporations' %}">Favorites</a>
-                        <a class="nav-link disabled" href="#">New</a>
-                        <a class="nav-link disabled" href="#">Old</a>
-                        <a class="nav-link {% if request.resolver_match.url_name == 'prefecture_search' %}active{% endif %}" href="{% url 'prefecture_search' %}">Prefecture</a>
-                        <a class="nav-link disabled" href="#">Popular</a>
+                        <a class="nav-link disabled" href="#">Statistic</a>
                     </div>
                 </div>
             </div>
@@ -34,8 +31,16 @@
             {% endblock %}
         </div>
 
+        <div>
+            {% block modals %}
+            {% endblock %}
+        </div>
+
         {% block javascript %}
             {% bootstrap_javascript %}
+            <script>
+                const CORPORATION_NUMBER_URL = "{% url 'corporation' 0 %}";
+            </script>
             <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
         {% endblock %}
     </body>

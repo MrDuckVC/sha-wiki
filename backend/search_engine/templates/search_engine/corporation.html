@@ -5,13 +5,28 @@
 {% block content %}
     <h1>PAGE UNDER CONSTRUCTION</h1>
     <ul>
-        <li>id: {{ corporation.id }}</li>
         <li>number: {{ corporation.number }}</li>
+        <li>process: {{ corporation.process }}</li>
+        <li>correct: {{ corporation.correct }}</li>
+        <li>update_date: {{ corporation.update_date }}</li>
+        <li>change_date: {{ corporation.change_date }}</li>
         <li>name: {{ corporation.name }}</li>
+        <li>name_image_id: {{ corporation.name_image_id }}</li>
+        <li>kind: {{ corporation.kind }}</li>
+        <li>street_number: {{ corporation.street_number }}</li>
+        <li>address_image_id: {{ corporation.address_image_id }}</li>
+        <li>post_code: {{ corporation.post_code }}</li>
+        <li>address_outside: {{ corporation.address_outside }}</li>
+        <li>address_outside_image_id: {{ corporation.address_outside_image_id }}</li>
+        <li>close_date: {{ corporation.close_date }}</li>
+        <li>close_cause: {{ corporation.close_cause }}</li>
+        <li>successor_number: {{ corporation.successor_number }}</li>
+        <li>change_cause: {{ corporation.change_cause }}</li>
+        <li>assignment_date: {{ corporation.assignment_date }}</li>
+        <li>latest: {{ corporation.latest }}</li>
         <li>en_name: {{ corporation.en_name }}</li>
-        <li>address: {{ corporation.address }}</li>
+        <li>en_address_outside: {{ corporation.en_address_outside }}</li>
         <li>furigana: {{ corporation.furigana }}</li>
-        <li>prefecture: {{ corporation.prefecture }}</li>
-        <li>city: {{ corporation.city }}</li>
+        <li>hihyoji: {{ corporation.hihyoji }}</li>
     </ul>
 {% endblock %}

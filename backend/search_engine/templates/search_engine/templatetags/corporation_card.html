@@ -1,21 +1,22 @@
 <div class="card h-100">
     <div class="card-header d-flex justify-content-between">
-        <div>
+        <a href="{% url 'corporation' corp.number %}" class="text-decoration-none">
             <h5 class="card-title">{{ corp.number }}</h5>
-        </div>
+        </a>
         <div>
+            <button type="button" class="share-button btn btn-outline-primary" title="Share" data-bs-toggle="modal" data-bs-target="#shareCorporationModal" data-corporation-number="{{ corp.number }}" data-corporation-url="{% url 'corporation' corp.number %}" data-corporation-name="{{ corp.name }}">
+                <i class="bi bi-share"></i>
+            </button>
             <button type="button" class="favorite-button btn btn-outline-warning" title="Add to favorites" id="favorite-button-{{ corp.number }}">
                 <i class="bi bi-star"></i>
             </button>
         </div>
     </div>
-    <a href="{% url 'corporation' corp.number %}" class="text-decoration-none">
-        <div class="card-body">
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">{{ corp.name }}{% if corp.en_name %} ({{ corp.en_name }}){% endif %}</li>
-                <li class="list-group-item">{% if corp.furigana %}{{ corp.furigana }}{% else %}N/A{% endif %}</li>
-                <li class="list-group-item">{{ corp.address }}</li>
-            </ul>
-        </div>
-    </a>
+    <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">{{ corp.name }}{% if corp.en_name %} ({{ corp.en_name }}){% endif %}</li>
+            <li class="list-group-item">{% if corp.furigana %}{{ corp.furigana }}{% else %}N/A{% endif %}</li>
+            <li class="list-group-item">{{ corp.address }}</li>
+        </ul>
+    </div>
 </div>

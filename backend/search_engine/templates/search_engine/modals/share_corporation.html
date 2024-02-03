@@ -1,0 +1,47 @@
+{% load bootstrap5 %}
+
+<div class="modal fade" id="shareCorporationModal" tabindex="-1" aria-labelledby="shareCorporationModalLabel" aria-hidden="true" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Share corporation</h5>
+            </div>
+
+            <div class="modal-body">
+                <div class="btn-group mb-3" role="group" aria-label="Share in social networks">
+                    <!--Telegram-->
+                    <a href="" target="_blank" class="btn btn-outline-secondary" id="share-in-telegram" title="Share in Telegram">
+                        <i class="bi bi-telegram"></i> Share in Telegram
+                    </a>
+
+                    <!--WhatsApp-->
+                    <a href="" target="_blank" class="btn btn-outline-secondary" id="share-in-whatsapp" title="Share in WhatsApp">
+                        <i class="bi bi-whatsapp"></i> Share in WhatsApp
+                    </a>
+
+                    <!--Facebook-->
+                    <a href="" target="_blank" class="btn btn-outline-secondary" id="share-in-facebook" title="Share in Facebook">
+                        <i class="bi bi-facebook"></i> Share in Facebook
+                    </a>
+
+                    <!--Twitter-->
+                    <a href="" target="_blank" class="btn btn-outline-secondary" id="share-in-twitter" title="Share in Twitter">
+                        <i class="bi bi-twitter-x"></i> Share in X (Twitter)
+                    </a>
+                </div>
+
+                <!--Copy link-->
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" id="share-link" readonly>
+                    <button class="btn btn-outline-secondary" type="button" id="copy-link" title="Copy link">
+                        <i class="bi bi-clipboard"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

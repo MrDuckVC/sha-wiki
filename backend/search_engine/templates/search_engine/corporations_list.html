@@ -16,23 +16,64 @@
         {% endif %}
     {% endblock %}
 
-    {% if page_obj.paginator.count == 0 %}
-        <p>No results found.</p>
-    {% else %}
-        <div class="row row-cols-1 row-cols-md-1 g-4 mb-3">
-            {% for corp in page_obj.object_list %}
-                <div class="col">
-                    {% corporation_card corp %}
-                </div>
+    {% block short_statistic %}
+        <div class="row mb-3">
+            {% for code_obj in dynamic_html.upper_running_title_for_home_page %}
+            {{ code_obj.code|safe }}
             {% endfor %}
         </div>
-        {% if page_obj.paginator.num_pages > 1 %}
-            {% bootstrap_pagination page_obj justify_content="center" url=request.get_full_path %}
+
+        <div class="row mb-3">
+            <!--
+                TODO: Add short statistic:
+                 1. number of corporations;
+                 2. number of new corporations;
+                 3. number of deleted corporations;
+                 4. number of corporations birthdays today;
+                 5. the oldest corporation.
+            -->
+            Amount of corporations: {{ page_obj.paginator.count }}
+        </div>
+
+        <div class="row mb-3">
+            {% for code_obj in dynamic_html.lower_running_title_for_home_page %}
+                {{ code_obj.code|safe }}
+            {% endfor %}
+        </div>
+    {% endblock %}
+
+    {% block pagination %}
+        {% if page_obj.paginator.count == 0 %}
+            <p>No results found.</p>
+        {% else %}
+            <div class="row mb-3">
+                {% page_size_selector page_obj url=request.get_full_path %}
+            </div>
+
+            <div class="row row-cols-1 row-cols-md-1 g-4 mb-3">
+                {% for corp in page_obj.object_list %}
+                    <div class="col">
+                        {% corporation_card corp %}
+                    </div>
+                {% endfor %}
+            </div>
+            {% if page_obj.paginator.num_pages > 1 %}
+                {% bootstrap_pagination page_obj justify_content="center" url=request.get_full_path %}
+            {% endif %}
         {% endif %}
-    {% endif %}
+    {% endblock %}
+{% endblock %}
+
+{% block modals %}
+    {{ block.super }}
+    {% include "search_engine/modals/share_corporation.html" %}
 {% endblock %}
 
 {% block javascript %}
     {{ block.super }}
     <script src="{% static 'search_engine/js/favorite_button.js' %}"></script>
+    <script src="{% static 'search_engine/js/share_button.js' %}"></script>
+    # bootstrap modals are not working without this script
+
+
 {% endblock %}

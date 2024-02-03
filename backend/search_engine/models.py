@@ -1,4 +1,7 @@
 from django.db import models
+from django.db.models import F
+
+from .utils import code_validator
 
 
 class Prefectures(models.Model):
@@ -109,3 +112,24 @@ class Corporations(models.Model):
             street_number=self.street_number if self.street_number else not_available,
             post_code=self.post_code if self.post_code else not_available,
         )
+
+
+class DynamicHTMLCode(models.Model):
+    class HTMLCodeType(models.TextChoices):
+        UPPER_RUNNING_TITLE_FOR_HOME_PAGE = "upper_running_title_for_home_page", "Upper running title for home page"
+        LOWER_RUNNING_TITLE_FOR_HOME_PAGE = "lower_running_title_for_home_page", "Lower running title for home page"
+
+    name = models.CharField(max_length=50, unique=True)
+    type = models.CharField(max_length=50, choices=HTMLCodeType.choices)
+    code = models.TextField(validators=[code_validator])
+    enabled = models.BooleanField(default=True)
+    expires_at = models.DateTimeField(blank=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = "dynamic_html_code"
+        ordering = [F("created_at").asc()]
+
+    def __str__(self):
+        return f"{self.code[:50]}..."

@@ -16,11 +16,10 @@ Including another URLconf
 """
 from django.urls import path
 
-from .views import HomeView, CorporationView, FavoriteCorporationView, PrefectureSearchView
+from .views import HomeView, CorporationView, FavoriteCorporationView
 
 urlpatterns = [
     path("", HomeView.as_view(), name="home"),
     path("<int:corporation_number>/", CorporationView.as_view(), name="corporation"),
     path("favorite_corporation/", FavoriteCorporationView.as_view(), name="favorite_corporations"),
-    path("prefecture_search/", PrefectureSearchView.as_view(), name="prefecture_search"),
 ]
