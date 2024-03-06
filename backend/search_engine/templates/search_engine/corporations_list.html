@@ -24,15 +24,12 @@
         </div>
 
         <div class="row mb-3">
-            <!--
-                TODO: Add short statistic:
-                 1. number of corporations;
-                 2. number of new corporations;
-                 3. number of deleted corporations;
-                 4. number of corporations birthdays today;
-                 5. the oldest corporation.
-            -->
-            Amount of corporations: {{ page_obj.paginator.count }}
+            <p>
+                <strong>Last updated:</strong> {{ last_update|date:"Y-m-d" }}
+            </p>
+            <p>
+                <strong>Companies updated:</strong> {{ updated_corporations_count }}
+            </p>
         </div>
 
         <div class="row mb-3">
