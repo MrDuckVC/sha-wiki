@@ -5,7 +5,7 @@ from django.views import View
 
 from .forms import SearchForm, PrefectureForm
 from .mixins import DynamicHtmlMixin
-from .models import Corporations, DynamicHTMLCode
+from .models import Corporations, DynamicHTMLCode, Prefectures
 
 
 class HomeView(View, DynamicHtmlMixin):
@@ -74,7 +74,7 @@ class FavoriteCorporationView(View):
 
         return render(
             request,
-            template_name="search_engine/corporations_list.html",
+            template_name="search_engine/favorite_corporations_list.html",
             context={
                 "page_obj": page_obj,
             },
@@ -100,5 +100,33 @@ class PrefectureSearchView(View):
             context={
                 "search_form": search_form,
                 "page_obj": page_obj,
+            },
+        )
+
+
+class StatisticsView(View):
+    def get(self, request):
+        # Get statistics.
+        corporations_amount = Corporations.objects.count()
+        prefectures_amount = Prefectures.objects.count()
+
+        # Get lists of corporations by different criteria.
+        youngest_corps = Corporations.objects.order_by("-change_date")
+        oldest_corps = Corporations.objects.order_by("change_date")
+        longest_names_corps = Corporations.objects.extra(select={"length": "Length(name)"}).order_by("-length")
+        foreign_address_corps = Corporations.objects.filter(address_outside__isnull=False).order_by("name")
+        # TODO: Add list of corps with most amount of updates (most_changes_corps).
+
+        return render(
+            request,
+            template_name="search_engine/statistics.html",
+            context={
+                "corporations_amount": corporations_amount,
+                "prefectures_amount": prefectures_amount,
+                "youngest_corps": youngest_corps[:10],
+                "oldest_corps": oldest_corps[:10],
+                "longest_names_corps": longest_names_corps[:10],
+                "foreign_address_corps": foreign_address_corps[:10],
+                "most_changes_corps": [],
             },
         )

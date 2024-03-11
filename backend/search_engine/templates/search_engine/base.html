@@ -21,7 +21,7 @@
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav">
                         <a class="nav-link {% if request.resolver_match.url_name == 'favorite_corporations' %}active{% endif %}" href="{% url 'favorite_corporations' %}">Favorites</a>
-                        <a class="nav-link disabled" href="#">Statistic</a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'statistics' %}active{% endif %}" href="{% url 'statistics' %}">Statistic</a>
                     </div>
                 </div>
             </div>

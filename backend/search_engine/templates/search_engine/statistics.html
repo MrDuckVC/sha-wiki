@@ -1,0 +1,156 @@
+{% extends "search_engine/base.html" %}
+
+{% load static %}
+
+{% block title %}Statistics{% endblock %}
+
+{% block content %}
+    <p>
+        <strong>Corporations amount:</strong> {{ corporations_amount }}
+    </p>
+    <p>
+        <strong>Prefectures amount:</strong> {{ prefectures_amount }}
+    </p>
+    <p>
+        <strong>Corporations tops:</strong>
+    </p>
+    <div class="accordion" id="corporationsTop">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#youngestCorporationsCollapse" aria-expanded="true" aria-controls="collapseOne">
+                    Youngest corporations
+                </button>
+            </h2>
+            <div id="youngestCorporationsCollapse" class="accordion-collapse collapse show" data-bs-parent="#corporationsTop">
+                <div class="accordion-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Creation date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for corporation in youngest_corps %}
+                        <tr>
+                            <td>{{ corporation.name }}</td>
+                            <td>{{ corporation.change_date }}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#oldestCorporationsCollapse" aria-expanded="true" aria-controls="collapseOne">
+                    Oldest corporations
+                </button>
+            </h2>
+            <div id="oldestCorporationsCollapse" class="accordion-collapse collapse" data-bs-parent="#corporationsTop">
+                <div class="accordion-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Creation date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for corporation in oldest_corps %}
+                        <tr>
+                            <td>{{ corporation.name }}</td>
+                            <td>{{ corporation.change_date }}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#longestNamesCorporationsCollapse" aria-expanded="true" aria-controls="collapseOne">
+                    Corporations with longest names
+                </button>
+            </h2>
+            <div id="longestNamesCorporationsCollapse" class="accordion-collapse collapse" data-bs-parent="#corporationsTop">
+                <div class="accordion-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Length</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for corporation in longest_names_corps %}
+                        <tr>
+                            <td>{{ corporation.name }}</td>
+                            <td>{{ corporation.name|length }}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#foreignAddressCorporationsCollapse" aria-expanded="true" aria-controls="collapseOne">
+                    Corporations with foreign address
+                </button>
+            </h2>
+            <div id="foreignAddressCorporationsCollapse" class="accordion-collapse collapse" data-bs-parent="#corporationsTop">
+                <div class="accordion-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Address</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for corporation in foreign_address_corps %}
+                        <tr>
+                            <td>{{ corporation.name }}</td>
+                            <td>{{ corporation.address_outside }}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#mostChangesCorporationsCollapse" aria-expanded="true" aria-controls="collapseOne" disabled>
+                    <i>
+                        Corporations with most changes (Coming soon)
+                    </i>
+                </button>
+            </h2>
+            <div id="mostChangesCorporationsCollapse" class="accordion-collapse collapse" data-bs-parent="#corporationsTop">
+                <div class="accordion-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Changes amount</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for corporation in most_changes_corps %}
+                        <tr>
+                            <td>{{ corporation.name }}</td>
+                            <td>{{ corporation.changes_amount }}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
