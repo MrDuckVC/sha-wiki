@@ -40,6 +40,10 @@ INSTALLED_APPS = [
     'search_engine.apps.SearchEngineConfig',
     'bootstrap5',
 ]
+if DEBUG:
+    INSTALLED_APPS += [
+        'debug_toolbar',
+    ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -50,6 +54,12 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+if DEBUG:
+    MIDDLEWARE.insert(0, 'debug_toolbar.middleware.DebugToolbarMiddleware')
+
+if DEBUG:
+    INTERNAL_IPS = os.environ.get("INTERNAL_IPS", "127.0.0.1, localhost").split(", ")
 
 ROOT_URLCONF = 'main.urls'
 

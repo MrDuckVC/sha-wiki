@@ -44,6 +44,6 @@ FROM runtime_base as runtime_dev
 EXPOSE 5000
 EXPOSE 5678
 
-RUN pip3 install --no-cache-dir --no-warn-script-location debugpy
+RUN pip3 install --no-cache-dir --no-warn-script-location debugpy django-debug-toolbar
 
 CMD ["python3", "-m", "debugpy", "--listen", "0.0.0.0:5678", "manage.py", "runserver", "0.0.0.0:5000"]
