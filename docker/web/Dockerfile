@@ -17,7 +17,8 @@ RUN pip3 install --no-cache-dir --no-warn-script-location \
         Pillow==10.0.1 \
         celery==5.3.6 \
         redis==5.0.3 \
-        pytidylib==0.3.2
+        pytidylib==0.3.2 \
+        django-debug-toolbar==4.3.0
 
 
 FROM python:3.11-slim as runtime_base
@@ -47,6 +48,6 @@ FROM runtime_base as runtime_dev
 EXPOSE 5000
 EXPOSE 5678
 
-RUN pip3 install --no-cache-dir --no-warn-script-location debugpy django-debug-toolbar
+RUN pip3 install --no-cache-dir --no-warn-script-location debugpy
 
 CMD ["python3", "-m", "debugpy", "--listen", "0.0.0.0:5678", "manage.py", "runserver", "0.0.0.0:5000"]
