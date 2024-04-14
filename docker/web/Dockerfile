@@ -10,11 +10,13 @@ RUN apt-get update && \
     pip3 install --upgrade pip
 
 RUN pip3 install --no-cache-dir --no-warn-script-location \
-        uwsgi \
+        uwsgi==2.0.24 \
         Django==4.2.5 \
         django-bootstrap-v5==1.0.11 \
         mysqlclient==2.2.0 \
         Pillow==10.0.1 \
+        celery==5.3.6 \
+        redis==5.0.3 \
         pytidylib==0.3.2
 
 
@@ -36,6 +38,7 @@ RUN apt-get update && \
 
 COPY --from=build /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
 COPY --from=build /usr/local/bin/uwsgi /usr/local/bin/
+COPY --from=build /usr/local/bin/celery /usr/local/bin/
 
 CMD ["sh", "-c", "uwsgi --master --die-on-term --protocol uwsgi --wsgi-file $WSGI_FILE_PATH --socket $SOCK_PATH --chmod-socket=666 --processes=$WSGI_PROCESSES"]
 

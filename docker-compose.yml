@@ -1,3 +1,7 @@
+networks:
+  redis:
+    driver: bridge
+
 volumes:
   python_sock:
   nginx_logs:
@@ -26,3 +30,43 @@ services:
     env_file:
       - ./database.env
       - ./web.env
+    networks:
+      - redis
+
+  celery-worker:
+    restart: unless-stopped
+    build:
+      context: ./docker/web
+      target: runtime_base
+    command: [ "celery", "-A", "main", "worker", "-l", "INFO", "-f", "/dev/stderr" ]
+    volumes:
+      - ./backend:/var/www/backend
+    env_file:
+      - ./database.env
+      - ./web.env
+    networks:
+      - redis
+    depends_on:
+      - redis
+
+  celery-beat:
+    restart: unless-stopped
+    build:
+      context: ./docker/web
+      target: runtime_base
+    command: [ "celery", "-A", "main", "beat", "-l", "INFO", "-f", "/dev/stderr" ]
+    volumes:
+      - ./backend:/var/www/backend
+    env_file:
+      - ./database.env
+      - ./web.env
+    networks:
+      - redis
+    depends_on:
+      - redis
+
+  redis:
+    restart: unless-stopped
+    image: redis:6-alpine
+    networks:
+      - redis

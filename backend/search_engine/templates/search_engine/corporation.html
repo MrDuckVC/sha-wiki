@@ -3,30 +3,35 @@
 {% load bootstrap5 %}
 
 {% block content %}
-    <h1>PAGE UNDER CONSTRUCTION</h1>
-    <ul>
-        <li>number: {{ corporation.number }}</li>
-        <li>process: {{ corporation.process }}</li>
-        <li>correct: {{ corporation.correct }}</li>
-        <li>update_date: {{ corporation.update_date }}</li>
-        <li>change_date: {{ corporation.change_date }}</li>
-        <li>name: {{ corporation.name }}</li>
-        <li>name_image_id: {{ corporation.name_image_id }}</li>
-        <li>kind: {{ corporation.kind }}</li>
-        <li>street_number: {{ corporation.street_number }}</li>
-        <li>address_image_id: {{ corporation.address_image_id }}</li>
-        <li>post_code: {{ corporation.post_code }}</li>
-        <li>address_outside: {{ corporation.address_outside }}</li>
-        <li>address_outside_image_id: {{ corporation.address_outside_image_id }}</li>
-        <li>close_date: {{ corporation.close_date }}</li>
-        <li>close_cause: {{ corporation.close_cause }}</li>
-        <li>successor_number: {{ corporation.successor_number }}</li>
-        <li>change_cause: {{ corporation.change_cause }}</li>
-        <li>assignment_date: {{ corporation.assignment_date }}</li>
-        <li>latest: {{ corporation.latest }}</li>
-        <li>en_name: {{ corporation.en_name }}</li>
-        <li>en_address_outside: {{ corporation.en_address_outside }}</li>
-        <li>furigana: {{ corporation.furigana }}</li>
-        <li>hihyoji: {{ corporation.hihyoji }}</li>
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" href="#main-info" data-bs-toggle="tab">法人番号 (Main info)</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#statistics" data-bs-toggle="tab">全国{{ corporation.number }}位 (Statistics)</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#geolocation" data-bs-toggle="tab">所在地 (Geolocation)</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#siteInfo" data-bs-toggle="tab">サイト情報 (SiteInfo)</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#media" data-bs-toggle="tab">報道での引用 (Media)</a>
+        </li>
     </ul>
+    <div class="tab-content">
+        <div class="tab-pane active d-flex justify-content-center" id="main-info">
+        </div>
+        <div class="tab-pane" id="statistics"></div>
+        <div class="tab-pane" id="geolocation">
+            <strong>Coming soon...</strong>
+        </div>
+        <div class="tab-pane" id="siteInfo">
+            <strong>Coming soon...</strong>
+        </div>
+        <div class="tab-pane" id="media">
+            <strong>Coming soon...</strong>
+        </div>
+    </div>
 {% endblock %}

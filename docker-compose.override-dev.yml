@@ -6,6 +6,8 @@ services:
       - ./docker/nginx/conf.dev.d:/etc/nginx/conf.d:ro
     ports:
       - 8000:80
+    networks:
+      - default
 
   db:
     image: mariadb
@@ -22,6 +24,24 @@ services:
       - 5678:5678
     depends_on:
       - db
+    networks:
+      - default
+
+  celery-worker:
+    build:
+      target: runtime_dev
+    depends_on:
+      - db
+    networks:
+      - default
+
+  celery-beat:
+    build:
+      target: runtime_dev
+    depends_on:
+     - db
+    networks:
+      - default
 
   start_dependencies:
     build: ./docker/start_dependencies

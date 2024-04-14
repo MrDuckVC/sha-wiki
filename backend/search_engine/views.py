@@ -5,7 +5,7 @@ from django.views import View
 
 from .forms import SearchForm, PrefectureForm
 from .mixins import DynamicHtmlMixin
-from .models import Corporations, DynamicHTMLCode, Prefectures
+from .models import Corporations, DynamicHTMLCode, Prefectures, Statistics
 
 
 class HomeView(View, DynamicHtmlMixin):
@@ -17,11 +17,11 @@ class HomeView(View, DynamicHtmlMixin):
     def get(self, request):
         search_form = SearchForm(data=request.GET)
 
-        # TODO: Last update date is not the best way to get the last update date, it is better to use a separate table for this.
-        last_update = Corporations.objects.order_by("-update_date").first().update_date if Corporations.objects.exists() else None
-        corporations = Corporations.objects.filter(update_date=last_update)
-        updated_corporations_count = corporations.count()
+        # Get statistics.
+        last_update = Statistics.objects.filter(type=Statistics.StatisticType.LAST_UPDATE).first().value
+        updated_corporations_count = Statistics.objects.filter(type=Statistics.StatisticType.LAST_UPDATED_CORPORATIONS_COUNT).first().value
 
+        corporations = Corporations.objects.all()
         if search_form.is_valid() and search_form.cleaned_data["search_field"]:
             corporations = Corporations.objects.all().filter(
                 Q(number=search_form.cleaned_data["search_field"]) |

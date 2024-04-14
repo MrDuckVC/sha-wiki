@@ -6,6 +6,8 @@ services:
       - ./docker/nginx/conf.d:/etc/nginx/conf.d:ro
     ports:
       - 8000:80
+    networks:
+      - default
 
   db:
     image: mariadb
@@ -18,12 +20,25 @@ services:
   web:
     depends_on:
       - db
+    networks:
+      - default
+
+  celery-worker:
+    depends_on:
+      - db
+    networks:
+      - default
+
+  celery-beat:
+    depends_on:
+     - db
+    networks:
+      - default
 
   start_dependencies:
     build: ./docker/start_dependencies
     depends_on:
       - web
-      - db
     command: db:3306 /var/run/python/uwsgi.sock
     volumes:
       - python_sock:/var/run/python
