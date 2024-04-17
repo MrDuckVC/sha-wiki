@@ -16,11 +16,9 @@ Including another URLconf
 """
 from django.urls import path
 
-from .views import HomeView, CorporationView, FavoriteCorporationView
+from .views import HomeView
 
-app_name = "search_engine"
+app_name = "data_statistics"
 urlpatterns = [
     path("", HomeView.as_view(), name="home"),
-    path("<int:corporation_number>/", CorporationView.as_view(), name="corporation"),
-    path("favorite_corporation/", FavoriteCorporationView.as_view(), name="favorite_corporations"),
 ]

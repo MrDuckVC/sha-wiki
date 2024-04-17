@@ -33,7 +33,11 @@
                         <tbody>
                         {% for corporation in youngest_corps %}
                         <tr>
-                            <td>{{ corporation.name }}</td>
+                            <td>
+                                <a href="{% url 'search_engine:corporation' corporation.number %}" class="text-decoration-none">
+                                    {{ corporation.name }}
+                                </a>
+                            </td>
                             <td>{{ corporation.change_date }}</td>
                         </tr>
                         {% endfor %}
@@ -60,7 +64,11 @@
                         <tbody>
                         {% for corporation in oldest_corps %}
                         <tr>
-                            <td>{{ corporation.name }}</td>
+                            <td>
+                                <a href="{% url 'search_engine:corporation' corporation.number %}" class="text-decoration-none">
+                                    {{ corporation.name }}
+                                </a>
+                            </td>
                             <td>{{ corporation.change_date }}</td>
                         </tr>
                         {% endfor %}
@@ -87,7 +95,11 @@
                         <tbody>
                         {% for corporation in longest_names_corps %}
                         <tr>
-                            <td>{{ corporation.name }}</td>
+                            <td>
+                                <a href="{% url 'search_engine:corporation' corporation.number %}" class="text-decoration-none">
+                                    {{ corporation.name }}
+                                </a>
+                            </td>
                             <td>{{ corporation.name|length }}</td>
                         </tr>
                         {% endfor %}
@@ -114,7 +126,11 @@
                         <tbody>
                         {% for corporation in foreign_address_corps %}
                         <tr>
-                            <td>{{ corporation.name }}</td>
+                            <td>
+                                <a href="{% url 'search_engine:corporation' corporation.number %}" class="text-decoration-none">
+                                    {{ corporation.name }}
+                                </a>
+                            </td>
                             <td>{{ corporation.address_outside }}</td>
                         </tr>
                         {% endfor %}
@@ -143,7 +159,11 @@
                         <tbody>
                         {% for corporation in most_changes_corps %}
                         <tr>
-                            <td>{{ corporation.name }}</td>
+                            <td>
+                                <a href="{% url 'search_engine:corporation' corporation.number %}" class="text-decoration-none">
+                                    {{ corporation.name }}
+                                </a>
+                            </td>
                             <td>{{ corporation.changes_amount }}</td>
                         </tr>
                         {% endfor %}

@@ -20,7 +20,8 @@ from django.conf import settings
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include("search_engine.urls"), name="search_engine"),
+    path("statistics/", include("data_statistics.urls", namespace="data_statistics"), name="data_statistics"),
+    path("", include("search_engine.urls", namespace="search_engine"), name="search_engine"),
 ]
 
 if settings.DEBUG:

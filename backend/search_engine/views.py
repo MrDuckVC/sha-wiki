@@ -7,7 +7,8 @@ from django.views import View
 
 from .forms import SearchForm, PrefectureForm
 from .mixins import DynamicHtmlMixin
-from .models import Corporations, DynamicHTMLCode, Prefectures, Statistics
+from .models import Corporations, DynamicHTMLCode
+from data_statistics.models import Statistics
 
 
 class HomeView(View, DynamicHtmlMixin):
@@ -102,22 +103,5 @@ class PrefectureSearchView(View):
             context={
                 "search_form": search_form,
                 "page_obj": page_obj,
-            },
-        )
-
-
-class StatisticsView(View):
-    def get(self, request):
-        return render(
-            request,
-            template_name="search_engine/statistics.html",
-            context={
-                "corporations_amount": Statistics.objects.filter(type=Statistics.StatisticType.CORPORATION_COUNT).first().value,
-                "prefectures_amount": Statistics.objects.filter(type=Statistics.StatisticType.PREFECTURE_COUNT).first().value,
-                "youngest_corps": Statistics.objects.filter(type=Statistics.StatisticType.YOUNGEST_CORPORATIONS).first().value[:10],
-                "oldest_corps": Statistics.objects.filter(type=Statistics.StatisticType.OLDEST_CORPORATIONS).first().value[:10],
-                "longest_names_corps": Statistics.objects.filter(type=Statistics.StatisticType.LONGEST_NAME_CORPORATIONS).first().value[:10],
-                "foreign_address_corps": Statistics.objects.filter(type=Statistics.StatisticType.FOREIGN_CORPORATIONS).first().value[:10],
-                "most_changes_corps": [],  # TODO: Add list of corps with most amount of updates (most_changes_corps).
             },
         )

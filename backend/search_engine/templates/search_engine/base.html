@@ -14,14 +14,14 @@
     <body>
         <nav class="navbar navbar-expand-lg border-body navbar-light bg-light mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" href="{% url 'home' %}">sha.wiki</a>
+                <a class="navbar-brand" href="{% url 'search_engine:home' %}">sha.wiki</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'favorite_corporations' %}active{% endif %}" href="{% url 'favorite_corporations' %}">Favorites</a>
-                        <a class="nav-link {% if request.resolver_match.url_name == 'statistics' %}active{% endif %}" href="{% url 'statistics' %}">Statistic</a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'favorite_corporations' %}active{% endif %}" href="{% url 'search_engine:favorite_corporations' %}">Favorites</a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'statistics' %}active{% endif %}" href="{% url 'data_statistics:home' %}">Statistics</a>
                     </div>
                 </div>
             </div>
@@ -39,7 +39,7 @@
         {% block javascript %}
             {% bootstrap_javascript %}
             <script>
-                const CORPORATION_NUMBER_URL = "{% url 'corporation' 0 %}";
+                const CORPORATION_NUMBER_URL = "{% url 'search_engine:corporation' 0 %}";
             </script>
             <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
         {% endblock %}

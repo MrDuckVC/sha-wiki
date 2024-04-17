@@ -1,10 +1,10 @@
 <div class="card h-100">
     <div class="card-header d-flex justify-content-between">
-        <a href="{% url 'corporation' corp.number %}" class="text-decoration-none">
+        <a href="{% url 'search_engine:corporation' corp.number %}" class="text-decoration-none">
             <h5 class="card-title">{{ corp.number }}</h5>
         </a>
         <div>
-            <button type="button" class="share-button btn btn-outline-primary" title="Share" data-bs-toggle="modal" data-bs-target="#shareCorporationModal" data-corporation-number="{{ corp.number }}" data-corporation-url="{% url 'corporation' corp.number %}" data-corporation-name="{{ corp.name }}">
+            <button type="button" class="share-button btn btn-outline-primary" title="Share" data-bs-toggle="modal" data-bs-target="#shareCorporationModal" data-corporation-number="{{ corp.number }}" data-corporation-url="{% url 'search_engine:corporation' corp.number %}" data-corporation-name="{{ corp.name }}">
                 <i class="bi bi-share"></i>
             </button>
             <button type="button" class="favorite-button btn btn-outline-warning" title="Add to favorites" id="favorite-button-{{ corp.number }}">

@@ -20,7 +20,7 @@ app.autodiscover_tasks()
 # Periodic tasks.
 app.conf.beat_schedule = {
     "update_statistics": {
-        "task": "search_engine.tasks.update_statistics",
+        "task": "data_statistics.tasks.update_statistics",
         "schedule": crontab(minute="*/5"),
     },
 }

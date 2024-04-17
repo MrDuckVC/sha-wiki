@@ -1,11 +1,10 @@
-import json
 import logging
-from datetime import datetime
 from typing import List
 
 from main.celery import app
 
-from .models import Statistics, Corporations
+from .models import Statistics
+from search_engine.models import Corporations
 
 
 logger = logging.getLogger(__name__)
