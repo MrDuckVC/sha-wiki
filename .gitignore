@@ -1,6 +1,7 @@
 # IDE and text editor files.
 .idea/
 .vscode/
+.vs/
 
 # Virtual Environment.
 venv/
